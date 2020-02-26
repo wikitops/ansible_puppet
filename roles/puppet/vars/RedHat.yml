@@ -1,0 +1,13 @@
+---
+
+###
+# REDHAT
+###
+
+# Package name
+puppet_server_package_name: puppetserver-{{ puppet_server_version }}
+puppet_agent_package_name: puppet-agent-{{ puppet_agent_version }}*
+
+# RPM URL
+puppet_yum_rpm: https://yum.puppet.com/puppet{{ puppet_major_version }}/puppet{{ puppet_major_version }}-release-el-7.noarch.rpm
+puppet_gpg_key: https://yum.puppetlabs.com/RPM-GPG-KEY-puppetlabs

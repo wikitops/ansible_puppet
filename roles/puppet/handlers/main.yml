@@ -1,0 +1,13 @@
+---
+
+- name: Restart puppet-server
+  systemd:
+    name: puppetserver
+    state: restarted
+    enabled: yes
+
+- name: Restart puppet-agent
+  systemd:
+    name: puppet
+    state: restarted
+    enabled: yes

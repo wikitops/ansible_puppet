@@ -1,0 +1,34 @@
+---
+
+- name: PUPPET SERVER | Install package
+  package:
+    name: "{{ puppet_server_package_name }}"
+    state: present
+
+- name: PUPPET SERVER | Configure sysconfig
+  template:
+    src: etc/sysconfig/puppetserver.j2
+    dest: /etc/sysconfig/puppetserver
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart puppet-server
+
+- name: PUPPET SERVER | Configure Puppet master
+  template:
+    src: etc/puppetlabs/puppet/puppet.conf.j2
+    dest: /etc/puppetlabs/puppet/puppet.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart puppet-server
+
+- name: PUPPET SERVER | Init intermediate certificate
+  shell: "{{ puppet_bin_path }}/puppetserver ca setup"
+  args:
+    creates: /etc/puppetlabs/puppet/ssl/ca/ca_crt.pem
+
+- name: PUPPET SERVER | Ensure the service is started
+  service:
+    name: puppetserver
+    state: started

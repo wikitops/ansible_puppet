@@ -1,0 +1,11 @@
+---
+
+- name: PUPPET REDHAT | Add GPG key
+  rpm_key:
+    key: "{{ puppet_gpg_key }}"
+    state: present
+
+- name: PUPPET REDHAT | Add repository
+  package:
+    name: "{{ puppet_yum_rpm }}"
+    state: present

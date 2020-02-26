@@ -1,0 +1,31 @@
+---
+
+- name: PUPPET AGENT | Install package
+  package:
+    name: "{{ puppet_agent_package_name }}"
+    state: present
+
+- name: PUPPET AGENT | Configure Puppet agent
+  template:
+    src: etc/puppetlabs/puppet/puppet.conf.j2
+    dest: /etc/puppetlabs/puppet/puppet.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart puppet-agent
+
+- name: PUPPET AGENT | Create the certificate request
+  shell: "{{ puppet_bin_path }}/puppet agent -t --ca_server {{ puppet_server }}"
+  args:
+    creates: /etc/puppetlabs/puppet/ssl/certificate_requests/{{ inventory_hostname }}.pem
+  when: inventory_hostname not in groups['puppet_server']
+  register: result
+  failed_when:
+    - "'Certificate Request fingerprint' not in result.stdout"
+    - result.rc != 0
+
+- name: PUPPET AGENT | Ensure the agent is started
+  service:
+    name: puppet
+    state: started
+    enabled: yes

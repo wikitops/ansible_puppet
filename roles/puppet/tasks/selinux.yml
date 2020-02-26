@@ -1,0 +1,11 @@
+---
+
+- name: PUPPET SELINUX | Disable SELinux
+  selinux:
+    state: disabled
+  register: selinux_state
+
+- name: PUPPET SELINUX | Reboot the server to apply SElinux update
+  reboot:
+    reboot_timeout: 3600
+  when: selinux_state.changed

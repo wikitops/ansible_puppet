@@ -1,0 +1,19 @@
+---
+
+- name: PUPPET DEBIAN | Install dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+    state: present
+
+- name: PUPPET DEBIAN | Add apt key
+  apt_key:
+    url: "{{ puppet_apt_key }}"
+    state: present
+
+- name: PUPPET DEBIAN | Add repository
+  apt:
+    deb: "{{ puppet_apt_deb }}"
+    state: present
+    update_cache: yes

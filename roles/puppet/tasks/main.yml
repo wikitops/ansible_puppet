@@ -1,0 +1,27 @@
+---
+
+- name: PUPPET | Include OS-specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: PUPPET | Configure hosts file
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ hostvars[item]['ip'] }} {{ item }}"
+  loop: "{{ groups['puppet_server'] }}"
+
+- name: PUPPET | Include OS-specific tasks
+  include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: PUPPET | Manage SElinux
+  import_tasks: selinux.yml
+
+- name: PUPPET | Manage Puppet Server
+  import_tasks: server.yml
+  when: inventory_hostname in groups['puppet_server']
+
+- name: PUPPET | Manage Puppet Agent
+  import_tasks: agent.yml
+
+- name: PUPPET | Manage Puppet Agent certificate
+  import_tasks: cert.yml
+  when: inventory_hostname in groups['puppet_server']

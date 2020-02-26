@@ -1,0 +1,24 @@
+---
+
+###
+# PUPPET
+###
+
+# Version
+puppet_major_version: 6
+puppet_server_version: "{{ puppet_major_version }}.9.0"
+puppet_agent_version: "{{ puppet_major_version }}.0.0"
+
+# Path to binary
+puppet_bin_path: /opt/puppetlabs/bin
+
+# Heap memory
+puppet_server_xms: 1g
+puppet_server_xmx: 1g
+
+# Puppet master
+puppet_dns_alt_names: "{{ inventory_hostname }},puppet"
+
+# Puppet agent
+puppet_certname: "{{ inventory_hostname }}"
+puppet_server: "{{ groups['puppet_server'][0] }}"

@@ -1,0 +1,8 @@
+---
+
+- name: PUPPET CERT | Sign all agent certificates
+  shell: "{{ puppet_bin_path }}/puppetserver ca sign --certname {{ item }}"
+  args:
+    creates: /etc/puppetlabs/puppet/ssl/ca/signed/{{ item }}.pem
+  loop: "{{ groups['all'] }}"
+  when: item not in groups['puppet_server']
