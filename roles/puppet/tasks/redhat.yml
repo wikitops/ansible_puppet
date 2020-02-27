@@ -9,3 +9,8 @@
   package:
     name: "{{ puppet_yum_rpm }}"
     state: present
+
+- name: PUPPET REDHAT | Add repository for the development kit
+  package:
+    name: "{{ puppet_tools_yum_rpm }}"
+    state: present

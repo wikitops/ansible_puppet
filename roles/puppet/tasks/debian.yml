@@ -17,3 +17,9 @@
     deb: "{{ puppet_apt_deb }}"
     state: present
     update_cache: yes
+
+- name: PUPPET DEBIAN | Add repository for the development kit
+  apt:
+    deb: "{{ puppet_tools_apt_deb }}"
+    state: present
+    update_cache: yes

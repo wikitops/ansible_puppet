@@ -2,7 +2,9 @@
 
 - name: PUPPET SERVER | Install package
   package:
-    name: "{{ puppet_server_package_name }}"
+    name:
+      - "{{ puppet_server_package_name }}"
+      - pdk
     state: present
 
 - name: PUPPET SERVER | Configure sysconfig
