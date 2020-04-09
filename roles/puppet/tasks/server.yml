@@ -7,6 +7,12 @@
       - pdk
     state: present
 
+- name: PUPPET SERVER | Update PATH to use pdk command
+  lineinfile:
+   dest: /root/.bashrc
+   state: present
+   line: 'PATH=$PATH:{{ puppet_extra_path }}'
+
 - name: PUPPET SERVER | Configure sysconfig
   template:
     src: etc/sysconfig/puppetserver.j2
