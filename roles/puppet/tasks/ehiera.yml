@@ -1,0 +1,38 @@
+---
+
+- name: PUPPET EHIERA | Install prerequisites
+  package:
+    name: rubygems
+    state: present
+
+- name: PUPPET EHIERA | Install the ehiera gem
+  gem:
+    name: hiera-eyaml
+    state: present
+
+- name: PUPPET EHIERA | Add the gems to the Puppet server
+  command: /opt/puppetlabs/bin/puppetserver gem install hiera-eyaml
+
+- name: PUPPET EHIERA | Create a key
+  command: eyaml createkeys
+  when: puppet_ehiera_create_key
+
+- name: PUPPET EHIERA | Create directory
+  file:
+    state: directory
+    path: /etc/puppetlabs/puppet/keys
+    owner: root
+    group: root
+    mode: 0755
+
+- name: PUPPET EHIERA | Deploy the eHiera key
+  copy:
+    src: etc/puppetlabs/puppet/keys/{{ item }}
+    dest: /etc/puppetlabs/puppet/keys/{{ item }}
+    owner: root
+    group: root
+    mode: 0600
+  loop:
+    - private_key.pkcs7.pem
+    - public_key.pkcs7.pem
+  when: not puppet_ehiera_create_key

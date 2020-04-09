@@ -11,6 +11,7 @@ puppet_agent_version: "{{ puppet_major_version }}.0.0"
 
 # Path to binary
 puppet_bin_path: /opt/puppetlabs/bin
+puppet_extra_path: /usr/local/bin
 
 # Heap memory
 puppet_server_xms: 1g
@@ -22,3 +23,6 @@ puppet_dns_alt_names: "{{ inventory_hostname }},puppet"
 # Puppet agent
 puppet_certname: "{{ inventory_hostname }}"
 puppet_server: "{{ groups['puppet_server'][0] }}"
+
+# eHiera key management
+puppet_ehiera_create_key: false
