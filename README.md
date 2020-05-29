@@ -13,6 +13,11 @@ What things you need to run this Ansible playbook :
 *   [Vagrant](https://www.vagrantup.com/docs/installation/) must be installed on your computer
 *   Update the Vagrant file based on your computer (CPU, memory), if needed
 *   Update the operating system to deploy in the Vagrant file (default: Ubuntu)
+*   Install the [Vagrant HostManager plugin](https://github.com/devopsgroup-io/vagrant-hostmanager) :
+
+```
+$ vagrant plugin install vagrant-hostmanager
+```
 *   Download the Ansible requirements:
 
 ```bash
@@ -42,6 +47,7 @@ Current machine states:
 
 puppet01                   running (virtualbox)
 puppet02                   running (virtualbox)
+puppet03                   running (virtualbox)
 ```
 
 If everything run as expected, you should have Puppet installed and configured on the Vagrant instance.

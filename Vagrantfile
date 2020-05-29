@@ -10,7 +10,7 @@ SUPPORTED_OS = {
 
 # Vagrant instance management
 $os                     = "centos"
-$num_instances          = 2
+$num_instances          = 3
 $instance_name_prefix   = "puppet"
 $vm_memory              = 2048
 $vm_cpus                = 2
@@ -37,6 +37,13 @@ if ! File.exist?(File.join(File.dirname($inventory), "hosts"))
 end
 
 Vagrant.configure("2") do |config|
+
+  # Configure hosts file
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.manage_guest = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline = true
 
   # always use Vagrants insecure key
   config.ssh.insert_key = false
